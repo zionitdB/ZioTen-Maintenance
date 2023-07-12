@@ -1,0 +1,186 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Renata - Add User</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.js"></script>
+</head> -->
+<style type="text/css">
+  .mainform{margin-top: 3%;}
+  .mainform form{margin-top: 3%;    margin-left: -14%;}
+  .btn-oranage{background-color: #f3732c ;color:#fff;}
+  .oranage{background-color:#f3732c}
+  .margin-bt{margin:1% 0;}
+  .header-name span{font-size:25px;}
+  
+  
+  .inputdemoErrors .inputErrorsApp {
+  min-height: 48px; }
+
+.inputdemoErrors md-input-container > p {
+  font-size: 0.8em;
+  text-align: left;
+  width: 100%; }
+</style>
+<body>
+
+<div class="container mainform">
+  <h4 class="text-center">Add User</h4>
+  <form>			<!--  action="#" method="post" -->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="user name">User Name:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      <input type="text" class="form-control" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))" ng-model="user.firstName" id="firstname" placeholder="Enter User Name" name="username">
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="Last name">Last Name:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      <input type="text" class="form-control" id="lastname" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))" ng-model="user.lastName" placeholder="Enter Last Name" name="lastname">
+    </div>
+  </div>
+  </div>
+</div>
+  </div>  
+  <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+		      <div class="row">
+			      <div class="col-sm-5 text-right">
+			     	 	<label for="Email Id">Email Id:<span style="color: red;">*</span></label>
+			      </div>
+			      <div class="col-sm-7">
+			      		<input type="email" class="form-control"  ng-model="user.emailId" placeholder="Enter Email Id" >
+			      </div>
+			      
+			      
+			      <!-- <md-input-container class="md-block">
+			      	<div class="col-sm-5 text-right">
+			        	<label>Client Email</label>
+			        </div>
+			        <div class="col-sm-7">
+			        	<input required type="email" name="clientEmail" ng-model="user.emailId"
+			               minlength="10" maxlength="15" ng-pattern="/^.+@.+\..+$/" />
+			
+				        <div ng-messages="user.emailId.$error" role="alert">
+				          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+				            Your email must be between 10 and 50 characters long and look like an e-mail address.
+				          </div>
+				        </div>
+			        </div>
+			      </md-input-container> -->
+			      
+			      
+		      </div>
+    	</div>
+  	</div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="Last name">Gender:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      <select class="form-control" id="gender" ng-model="user.gender" name="gender">
+      	<option value="selectGender">Select Gender</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+      </select>
+    </div>
+  </div>
+  </div>
+</div>
+  </div>  
+  <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="Password">Password:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      <input type="password" class="form-control"  ng-model="user.password" placeholder="Enter Password" >
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="Contact Number">Contact No.:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      <input type="text" class="form-control" id="contactno" minlength="10" maxlength="10" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : ((event.charCode >= 48 && event.charCode <= 57))" ng-model="user.contactNo" placeholder="Enter Contact Number" name="contactno">
+    </div>
+  </div>
+  </div>
+</div>
+  </div>  
+  <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+      <div class="row">
+      <div class="col-sm-5 text-right">
+      <label for="user name">Employee Id:<span style="color: red;">*</span></label></div>
+      <div class="col-sm-7">
+      	<input type="text" class="form-control"  ng-blur="vm.validateUserId(user.id)" ng-disabled="disableEmployeeId" ng-model="user.id" placeholder="Enter Employee Id" >
+      	<label ng-if="error">*User Id already exits</label>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+  	<div class="col-sm-5 form-group text-right">
+     
+    </div>
+    <div class="col-sm-7 form-group text-right">
+     <div style="width:50%;float:left;margin-right: 2%;">
+      <button class="btn btn-success" style="width:100%;" ng-if="!showEditButton" ng-click="vm.createUser(user)">Submit</button>   
+      <button class="btn btn-success" style="width:100%;" ng-if="showEditButton" ng-click="vm.editUserInformation(user)">Submit</button>   
+   		</div>
+   		<div style="width:46%;float:left;">
+   			<button class="btn btn-danger" style="width:100%;" ng-click="vm.addNewUser()">Clear</button>   
+   		</div>
+    </div>
+  </div>
+  </div>  
+  </form>
+  <div class="container">
+	<table class="table table-bordered" datatable="ng" style="width:60%;margin:0 auto;">
+		<thead>
+			<tr class="oranage">
+				<th>#</th>
+				<th>Name</th>
+				<th>Employee Id</th>
+				<th>Mobile No.</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="arr in vm.users track by $index">
+				<td>{{$index + 1}}</td>
+				<td>{{arr.firstName + ' ' + arr.lastName}}</td>
+				<td>{{arr.id}}</td>
+				<td>{{arr.contactNo}}</td>
+				<td nowrap >
+					<button class="btn btn-info" ng-disabled="arr.id=='001'" ng-click="vm.editUser(arr);">Edit</button>
+					<button class="btn btn-danger" ng-disabled="arr.id=='001'" ng-click="vm.deleteUser(arr);">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+  </div>
+</div>
+
+<!-- </body>
+</html> -->

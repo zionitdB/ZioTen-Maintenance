@@ -1,0 +1,255 @@
+<style>
+#loaderAi { position: absolute; left: 50%; top: 50%;z-index: 1; width: 150px; height: 150px;margin: -75px 0 0 -75px;  border: 16px solid #f3f3f3;  border-radius: 50%;  border-top: 16px solid #3498db;  width: 120px;  height: 120px;  -webkit-animation: spin 2s linear infinite;  animation: spin 2s linear infinite;}
+@-webkit-keyframes spin {  0% { -webkit-transform: rotate(0deg); }  100% { -webkit-transform: rotate(360deg); }}
+@keyframes spin {  0% { transform: rotate(0deg); }  100% { transform: rotate(360deg); }}.animate-bottom { position: relative;  -webkit-animation-name: animatebottom;  -webkit-animation-duration: 1s;  animation-name: animatebottom;  animation-duration: 1s}
+@-webkit-keyframes animatebottom {  from { bottom:-100px; opacity:0 }   to { bottom:0px; opacity:1 }}
+@keyframes animatebottom {  from{ bottom:-100px; opacity:0 }   to{ bottom:0; opacity:1 }}
+#myDiv {  display: none;  text-align: center;}
+.table-bordered tr th, .table-bordered tr td, .table-bordered tr{border: 1px solid #ccc !important;}
+.orange{ background-color: #e67817;}
+.orange th{color:#fff;}
+</style>
+
+<script>setTimeout(function(){ $("#loaderAi").hide(); }, 5000);</script>
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+
+<script src="templates/views/js/jquery/jquery.table2excel.js"></script>
+
+<script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.12/xlsx.core.min.js"></script>
+
+<script src="templates/checklist/angular-file-model.js"></script>
+
+
+<div id="loaderAi"></div>
+
+<div class="container-fluid">
+	<div class="row page-title-div">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div class="row">
+				<h2 class="title" style="text-align:center;margin-top:6%;margin-bottom:3%;"> ADD MACHINE/AUXILIARY CHECKLIST</h2>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-widget">
+<div class="row">
+		<div class="col-md-12">
+		<div class="col-sm-8"></div>
+		<div class="col-sm-3">
+						<div align="right" style="margin-top:5%;">
+								<button type="submit" class="btn_serach" id="success"
+									ng-click="vm.uploadNew()">Upload</button>
+							</div>
+				</div>
+		</div>
+</div>		
+
+	<div class="row">
+		<div class="col-md-12">
+		<div class="container">
+		<div class="row" ng-show="uploadTab">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="name13">Upload Machien: <span style="color:#c00;">*</span></label> 
+							  <input id="uploadMachine"  class="form-control mandtry"  type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />  
+							</div>
+						</div>
+						
+						
+						
+						
+						<div class="col-md-6"></div>
+						<div class="col-md-6">
+							<div align="right" style="margin-top:5%;">
+								<button type="submit" class="btn_serach" id="success"
+									ng-click="vm.upload()">Upload</button>
+							</div>
+						</div>
+						</div>
+					<div class="col-sm-12" style="margin-top:3%;">
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label">Machine Name <span style="color:#c00;">*</span></label>
+							<select class="form-control" ng-model="machOwner.machineName"	 ng-change="vm.getMachinesByName(machOwner.machineName);" >
+									<option ng-show="showSelectMachineName" value="selectMachineNames"> Select Machine </option>
+									<option  ng-repeat="opts in vm.machineNames" value="{{opts}}"> {{opts}}</option>
+								</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label">Machine ID <span style="color:#c00;">*</span></label>
+							<select class="form-control" ng-model="selectedMachine">	 <!-- ng-change="showSelectMachine" -->
+								<option ng-show="showSelectMachine" value="selectMachine"> Select machine </option>
+							
+									<option  ng-repeat="opts in vm.machines" value="{{opts}}"> {{opts.eqid}} </option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label">Type <span style="color:#c00;">*</span></label>
+							<select class="form-control" ng-model="selectedType">	 <!-- ng-change="showSelectMachine" -->
+								<option value="selectType"> Select Type </option>
+								<option value="predictive"> predictive </option>
+								<option value="preventive"> preventive </option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label">Frequency <span style="color:#c00;">*</span></label>
+							<select id="sel_freq" class="form-control" ng-model="selectedMode" ng-change="vm.changeMode(selectedMode)">
+								<option value="selectFrequency" ng-show="showSelectFrequency"> Select frequency </option>
+								<option value="weekly"> Weekly </option>
+								<option value="monthly"> Monthly </option>
+								<option value="quarterly"> Quarterly </option>
+								<option value="halfyearly"> Half Yearly </option>
+								<option value="yearly"> Yearly </option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12">
+					<div class="col-sm-6">
+						<div class="col-sm-3">
+						<label class="control-label">Checkpoint </label>
+						</div>
+						<div class="col-sm-9">
+							<button id="addButton" class="btn btn-success" ng-click="vm.increment();"><i class="fa fa-plus"></i></button>
+							<button id="removeButton" class="btn btn-danger" ng-click="vm.decrement();"><i class="fa fa-minus"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12" id="TextBoxesGroup">
+					<div class="col-sm-4"><label>Checkpoint</label></div>
+					<div class="col-sm-4"><label>Operation Method</label></div>
+					<div class="col-sm-4"><label>Acceptable Range</label></div>
+					<div class="col-sm-4"><input type="text" class="form-control" name="checkpoint0" id="checkpoint0" value="" ></div>
+					<div class="col-sm-4"><input type="text" class="form-control" name="operation0" id="operation0" value="" ></div>
+					<div class="col-sm-4"><input type="text" class="form-control" name="acceptableRange0" id="acceptableRange0" value="" ></div>
+					
+				</div>
+				<div class="col-sm-8">
+				</div>
+				<div class="col-sm-4">
+					<div align="right">
+					<button class="btn_serach" id="submitChecklistToClearId" ng-click="vm.submitChecklist();">Submit</button>
+					</div>
+				</div>
+				
+				<div class="panel-body table-responsive">
+					<table datatable="ng" id="t_body1" class="table table-bordered">
+						<thead class="orange">
+							<tr>
+							
+								<td>Id</td>
+								<td>Machine name</td>
+								<td>Equipment Id</td>
+								<td>Frequency</td>
+								<td>Acceptable Range</td>
+								<td>Task</td>
+								<td>Type</td>
+								<td>Action</td>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="checklist in vm.checklists | filter : search | limitTo:totalDisplayed  | orderBy">
+									
+								<td>{{$index+1}}</td>
+								<td>{{checklist.machine.machine_name}} </td>
+								<td>{{checklist.machine.eqid}}</td>
+								<td>{{checklist.frequency}}</td>
+								<td>{{checklist.acceptableRange}}</td>
+								<td>{{checklist.task}}</td>
+								<td>{{checklist.type}}</td>
+								
+								<th nowrap>
+									
+									<!-- <button type="button" class="btn btn-info"
+										ng-click="vm.view(checklist)">
+										<i class="fa fa-eye" aria-hidden="true"></i>VIEW
+									</button>
+									<button type="button" class="btn btn-success"
+										ng-click="vm.add(checklist)">
+										<i class="fa fa-edit" aria-hidden="true"></i>EDIT
+									</button> -->
+									<button type="button" title="Delete" class="btn btn-danger"
+										ng-click="vm.delet(checklist)">
+										<i class="fa fa-trash" aria-hidden="true"></i>
+									</button>
+								</th>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#export_to_excel').click(function() {
+			$("#t_body1").table2excel({
+				exclude : ".action",
+				name : "All Enterprises",
+				filename : "Cheklist",
+				fileext : ".xls",
+				exclude_img : true,
+				exclude_links : true,
+				exclude_inputs : true
+			});
+		});
+	});
+	$(document).ready(function(){
+	    var counter = 1;
+	    $("#addButton").click(function () {
+			var newTextBoxDiv = $(document.createElement('div'))
+			     .attr("id", 'TextBoxDiv' + counter);
+			var newlabel=$(document.createElement('div')).attr("id",'labelbox'+counter);
+		    /* if(counter == 1){
+		    	newlabel.after().html('<div class="col-sm-6"><label>Checkpoint</label></div><div class="col-sm-6"><label>Operation Method</label></div>');
+				newlabel.appendTo("#TextBoxesGroup");
+			} */
+			newTextBoxDiv.after().html('<div class="col-sm-6"><input type="text" class="form-control" name="checkpoint' + counter + 
+			      '" id="checkpoint' + counter + '" value="" ></div><div class="col-sm-6"><input type="text" class="form-control" name="operation' + counter + 
+			      '" id="operation' + counter + '" value="" ></div>');
+			newTextBoxDiv.appendTo("#TextBoxesGroup");
+			counter++;
+			
+			if(counter==7){
+		    	$("#TextBoxesGroup").css("height","196px");
+		    	 $("#TextBoxesGroup").css("overflow-y","scroll"); 
+		    }
+	     });
+	    
+	     $("#removeButton").click(function () {
+			if(counter==1){
+		          alert("No more textbox to remove");
+		          
+		          return false;
+		       }  
+			if(counter < 7){
+				$("#TextBoxesGroup").css("height","auto");
+		    	 $("#TextBoxesGroup").css("overflow-y","hidden");
+			}
+			counter= counter-1;
+		        $("#TextBoxDiv" + counter ).remove();
+		        $("#labelbox" + counter ).remove();
+	     });
+	     
+	     $("#submitChecklistToClearId").click(function () {
+	    	 counter = 1;
+	     });
+	     
+	  });
+</script>

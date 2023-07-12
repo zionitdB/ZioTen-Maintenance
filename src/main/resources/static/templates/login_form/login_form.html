@@ -1,0 +1,163 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login Form</title>
+<link rel="stylesheet" href="templates/login_form/css/style.css">
+<link rel="stylesheet" href="templates/login_form/css/bootstrap.min.css" />
+</head>
+
+<body>
+<form>
+	<div class="row">
+		<div class="col-sm-12 ">
+			<div style="margin-left: 25%;">
+				<div class="col-sm-8  loginbox2">
+					<div class="row loginbox"	style="margin-left: 5px; margin-right: 5px;">
+						<div class="col-sm-6">
+							<img src="templates/login_form/img/logo.png" alt="Smiley face"	class="mainlogo">
+						</div>
+						<div class="col-sm-6" style="margin-top: 7%;">
+							<div class="input_field">
+								
+								<br/> 
+								
+							</div>
+							<div class="btn1">
+								
+							</div>
+						</div>
+					</div>
+					<br />
+				</div>
+			</div>
+		</div>
+	</div>
+	</form>
+	<footer class="footer text-center" style="font-size: 13px;">
+		<i class="fa fa-copyright"></i> 2018 SCHINDLER. All rights reserved | Design & Developed by<strong><a href="http://a2mee.com/">A2mee</a></strong>
+	</footer>
+</body>
+</html>
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Login Admin</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style rel="stylesheet">
+.login {
+	background-color: rgb(16, 132, 196);
+	padding: 6.8% 6%;
+	width: 75%;
+	margin: 9% auto;
+}
+
+.login .form-control {
+	background-color: #1084c4;
+	border: 0px;
+	border-radius: 0px;
+	border-bottom: 2px solid #fff;
+	color: #fff !important;
+}
+
+::placeholder {
+	color: #e4e4e4 !important;
+	opacity: 1;
+}
+
+
+.btnn {
+	background-color: rgb(230, 120, 23);
+	width: 100% !important;
+	margin-top: 8%;
+	border-radius: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.ecoaxis {
+	width: 80%;
+}
+
+.login-logo {
+	background-color: #fff;
+	padding: 2% 6%;
+	width: 75%;
+	margin: 10% auto;
+}
+
+.power {
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+}
+
+.footer {
+	color: #fff;
+	background-color: rgb(230, 120, 23);
+	padding: 10px 1%;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}
+
+.footer p {
+	margin-bottom: 0px;
+}
+
+.back {
+	background-image: url(templates/login_form/img/digi_maint2.jpg);
+/* 	//background-image: url(templates/login_form/img/login.png); */
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.loginc {
+	max-width: none !important;
+	width: 100% !important;
+	margin: 0 !important;
+}
+</style>
+<!-- </head> -->
+<body>
+
+	<div class="container loginc">
+		<div class="row back" >
+	
+			<div class="col-md-6 col-sm-6 col-xs-12">
+				<div class="login">
+					<p class="power">Powered By</p>
+					<div class="login-logo" align="center">
+						<img src="templates/login_form/img/adplogo.jpg" class="img-fluid ecoaxis">
+					</div>
+					<form>	 <!-- action="#" method="post" -->
+						<div class="form-group">
+
+							<input type="text" class="form-control"
+								data-ng-model="login.id" Placeholder="Enter Employee Id"
+								required>
+
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control"
+								data-ng-model="login.password" Placeholder="Enter password"
+								required>
+						</div>
+						<button class="btn btnn" name="submit"
+							value="Sign In" ng-click="vm.doLogin(login)">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<p class="text-center">&copy COPYRIGHT RESERVED BY <a href="http://www.a2mee.com">A2MEE</p>
+	</div>
+</body>
+</html>

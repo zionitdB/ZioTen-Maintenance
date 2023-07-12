@@ -1,0 +1,182 @@
+<style>
+.white {
+	background-color: #fff;
+}
+
+.act-add {
+	color: rgb(111, 170, 188);
+	text-align: center;
+	font-size: 15px;
+}
+
+.act-edit {
+	color: rgb(152, 108, 153);
+	text-align: center;
+	font-size: 15px;
+}
+
+.act-add .fa, .act-edit .fa {
+	font-size: 20px;
+}
+
+.width-80 .row {
+	margin: 1% 0;
+}
+
+.width-80 .row .control-label {
+	text-align: right;
+	font-weight: 600;
+}
+
+.width-80 {
+	width: 50%;
+	margin: 0 auto;
+}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 header-name">
+			<h1 style="margin-bottom:3%;"><span>Breakdown Create Memo</span></h1>
+		</div>
+	</div>
+	<div class="width-80">
+		<!-- <div class="row">
+			<div class="col-sm-6">
+				<label class="control-label">BD Slip No. <span style="color:#c00;">*</span> :</label>
+			</div>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" id="breakdownName"
+					ng-model="breakdown.bd_slip" placeholder="Breakdown Name" ng-disabled="true"
+					ng-required="true">
+			</div>
+		</div> -->
+		<div class="form-group">
+				<div class="col-sm-6">
+					<span class="txt f-r">Select Department <span style="color:#c00;">*</span> : </span>
+				</div>
+				<div class="col-sm-6">
+					
+					<select class="form-control mandtry"
+																			ng-model="department" id="department"
+																			ng-options="department as department.departmentName for department in vm.departments" 
+																			style="height: calc(2.25rem + 3px);margin-top: -5px;" required>
+																			<option value="" disabled selected>Select department</option>
+																		</select>
+				</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<label class="control-label">Shift <span style="color:#c00;">*</span> :</label>
+			</div>
+			<div class="col-sm-6">
+					<select class="form-control" ng-model="selectedShift">	 <!-- ng-change="showSelectMachine" -->
+						<option value="selectShift"> Select shift </option>
+						<option ng-repeat="shift in vm.shifts" value="{{shift}}"> {{shift.shift_name}} </option>
+					</select>
+			</div>
+		</div>
+		<div class="row">
+			<!-- <div class="form-group">
+				<div class="col-sm-6">
+					<span class="txt f-r">Select Type <span style="color:#c00;">*</span> : </span>
+				</div>
+				<div class="col-sm-6">
+				 <select ng-model="machine_mst.type" class="form-control" required>
+							<option value="">Select Equipment Type</option>
+							<option value="1">Machine</option>
+							<option value="2">Auxiliary</option>
+				</select>
+				</div>
+			</div> -->
+				<div class="form-group">
+				<div class="col-sm-6">
+					<span class="txt f-r">Select Machine <span style="color:#c00;">*</span> : </span>
+				</div>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="selectedMachineNames"	 ng-change="vm.changeMachineNames(selectedMachineNames);" >
+									<option ng-show="showSelectMachineName" value="selectMachineNames"> Select Machine </option>
+									<option  ng-repeat="opts in vm.machineNames" value="{{opts}}"> {{opts}}</option>
+								</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-6">
+					<span class="txt f-r">Select Equipment <span style="color:#c00;">*</span> : </span>
+				</div>
+				<div class="col-sm-6">
+					<select class="form-control" ng-model="selectedEquipment">
+						<option value="selectEquipment"> Select Equipment </option>
+						<option ng-repeat="opts in vm.machines" value="{{opts}}"> {{opts.eqid}} </option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<label class="control-label">Complaint Cause <span style="color:#c00;">*</span> :</label>
+			</div>
+			<div class="col-sm-6">
+				<textarea class="form-control" ng-model="breakdown.observation" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<label class="control-label">Detected By <span style="color:#c00;">*</span> :</label>
+			</div>
+			<div class="col-sm-6">
+				<input type="text" name="decetectedby" ng-model="breakdown.detected_by" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6"></div>
+			<div class="col-sm-6">
+				<button class="btn_serach" ng-click="vm.ok(breakdown)">Submit
+					</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <div class="container">
+	<div class="panel-body table-responsive">
+		<table datatable="ng" id="example" class="table display">
+			<thead style="background-color: #fff;">
+				<tr>
+					<th>ID</th>
+					<th>Breakdown Slip</th>
+					<th>Type</th>
+					<th>Machine Name</th>
+					<th>Observation</th>
+						<th>Detected By</th>
+					<th>Shift</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="breakdown in vm.breakdowns">
+					<td>{{$index+1}}</td>
+					<td>{{breakdown.bd_slip}}</td>
+					
+					
+					<td nowrap ng-if="breakdown.machine.type==1">Machine</td>
+								<td nowrap ng-if="breakdown.machine.type==2">Auxiliary</td>
+					<td>{{breakdown.machine.machine_name}}</td>
+					<td>{{breakdown.observation}}</td>
+					<td>{{breakdown.detected_by}}</td>
+					<td>{{breakdown.shift.shift_name}}</td>
+					
+					<td class="text-nowrap">
+						<button type="button" class="btn btn-info"
+							ng-click="vm.add(breakdown)">
+							<i class="fa fa-edit" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="vm.delet(breakdown)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div> -->

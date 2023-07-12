@@ -1,0 +1,305 @@
+<style>
+.white {
+	background-color: #fff;
+}
+
+.act-add {
+	color: rgb(111, 170, 188);
+	text-align: center;
+	font-size: 15px;
+}
+
+.act-edit {
+	color: rgb(152, 108, 153);
+	text-align: center;
+	font-size: 15px;
+}
+
+.act-add .fa, .act-edit .fa {
+	font-size: 20px;
+}
+
+.width-80 .row {
+	margin: 1% 0;
+}
+
+.width-80 .row .control-label {
+	font-weight: 600;
+}
+
+.width-80 {
+	width: 50%;
+	margin: 0 auto;
+}
+.table-bordered tr th, .table-bordered tr td, .table-bordered tr{border: 1px solid #ccc !important;}
+.orange{ background-color: #e67817;}
+.orange th{color:#fff;}
+</style>
+
+<div class="container">
+<div class="row">
+		<div class="col-sm-12 header-name">
+			 <span>Update Breakdown</span>
+		</div>
+	</div>
+	<div class="panel-body table-responsive" style="margin-top:1%;">
+		<table datatable="ng" id="example" class="table table-bordered">
+			<thead class="orange">
+				<tr>
+					<th>ID</th>
+					<th>Breakdown Slip</th>
+					<th>Type</th>
+					<th>Machine Name</th>
+					<th>Complaint Cause</th>
+					<th>Detected By</th>
+					<th>Shift</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="breakdown in vm.breakdowns">
+					<td>{{$index+1}}</td>
+					<td>{{breakdown.bd_slip}}</td>
+					
+					
+					<td nowrap ng-if="breakdown.machine.type==1">Machine</td>
+								<td nowrap ng-if="breakdown.machine.type==2">Auxiliary</td>
+					<td>{{breakdown.machine.machine_name}}- {{breakdown.machine.eqid}}</td>
+					<td>{{breakdown.observation}}</td>
+					<td>{{breakdown.detected_by}}</td>
+					<td>{{breakdown.shift.shift_name}}</td>
+					<!-- <td nowrap ng-if="breakdown.status==1">Waiting for Trial</td>
+					<td nowrap ng-if="breakdown.status==2">Sent to Trial</td>
+					<td nowrap ng-if="breakdown.status==3">Approved</td> -->
+					<td> {{breakdown.status==1 ? 'Waiting for Maintenance' : breakdown.status==2 ? 'Waiting for Trial' : breakdown.status==4 ? 'Approved with deviation' : 'Approved'}} </td>
+					<td class="text-nowrap">
+						<button type="button" class="btn btn-info"
+							ng-click="vm.add(breakdown)" ng-disabled="breakdown.status == 3 || breakdown.status==4 || breakdown.status==2">
+							Update Breakdown
+						</button>
+						<!-- <button type="button" class="btn btn-danger"
+							ng-click="vm.delet(breakdown)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="container" ng-show="showEdit">
+	<div class="row">
+		<div class="col-sm-12 header-name">
+			<img src="img/breakdown.png"><span>Breakdown Update Memo</span>
+		</div>
+	</div>
+	<div class="width-80">
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">BD Slip No. :</label>
+			</div>
+			<div class="col-sm-4">
+				<input type="text" name="BDslipno" ng-model="breakdownupdate.bd_slip" ng-disabled="true" class="form-control">
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Shift :</label>
+			</div>
+			<div class="col-sm-4">
+				<select class="form-control" ng-model="selectedShift">
+					<option value="select shift">select shift</option>
+					<option ng-repeat="opts in vm.shifts" value="{{opts}}"> {{opts.shift_name}} </option>
+				</select>
+			</div>
+			<div class="col-sm-4" style="padding: 0; margin-left: -1%;">
+				<div class="input-group mb-3">
+				<div class = "input-group">
+			         <span class = "input-group-addon oranage">Date</span>
+			         <input ttype="date" ng-model="date" class="form-control" style="padding: 7px;">
+			      </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				</div>
+			<div class="col-sm-6">
+				<!--  <select ng-model="machine_mst.type" class="form-control" required>
+							<option value="">Select Type</option>
+							<option value="1">Machine</option>
+							<option value="2">Auxiliary</option>
+				</select> -->
+			</div>
+			<div class="col-sm-4">
+				<label class="control-label">Select Equipment :</label>
+			</div>
+			<div class="col-sm-8">
+				<select class="form-control" ng-model="selectedEquipment">
+					<option value="selectEquipment"> Select Equipment </option>
+					<option  ng-repeat="opts in vm.machines" value="{{opts}}"> {{opts.machine_name}} - {{opts.eqid}} </option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Complaint Cause :</label>
+			</div>
+			<div class="col-sm-8">
+				<textarea class="form-control" ng-model="breakdownupdate.observation" rows="3"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Root Cause <span style ="color:red">*</span>:</label>
+			</div>
+			<div class="col-sm-8">
+			<input type="text" class="form-control" ng-model="breakdownupdate.root_cause">
+				<!-- <select class="form-control">
+					<option>affsdf</option>
+					<option>skfhs</option>
+					<option>klsdjfh</option>
+				</select> -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Action Taken <span style ="color:red">*</span>:</label>
+			</div>
+			<div class="col-sm-8">
+				<input type="text" name="action-taken" ng-model="breakdownupdate.action_taken" class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Preventive Action Plan :</label>
+			</div>
+			<div class="col-sm-8">
+				<input type="text" name="preventive-action-taken" ng-model="breakdownupdate.prev_action_plan"
+					class="form-control">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Spare Used :</label>
+			</div>
+			<div class="col-sm-6">
+				<table class="table table-reponsive table-bordered" id="spaceuse">
+					<thead class="oranage" style="width:255px;">
+						<tr>
+							<th>Name</th>
+							<th>QTY</th>
+						</tr>
+					</thead>
+					<tbody style="width:255px;">
+						<tr>
+							<td><input type="text" class="form-control" id="namespa0" style="width:150px"></td>
+							<td><input type="text" class="form-control" id="qtyspa0" style="width:63px"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-2" style="margin-top: 7%;">
+				<button id="addButton" ng-click="vm.addbuttonn();" class="btn btn-success"><i class="fa fa-plus"></i></button>
+							<button id="removeButton" ng-click="vm.removebuttonn();" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<label class="control-label">Action Take By :</label>
+			</div>
+			<div class="col-sm-4">
+				<input type="text" name="" class="form-control" ng-model="breakdownupdate.action_by" ng-disabled="true">
+			</div>
+			<div class="col-sm-4">
+				<button class="btn_serach" ng-click="vm.ok(breakdownupdate)" style="width:100%;">Send For Trial</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!-- <div class="container">
+	<div class="panel-body table-responsive">
+		<table datatable="ng" id="example" class="table display">
+			<thead style="background-color: #fff;">
+				<tr>
+					<th>ID</th>
+					<th>Slip Number</th>
+					<th>Shift</th>
+					<th>Type</th>
+					<th>Machine</th>
+					<th>Observation</th>
+					<th>Root Cause</th>
+					<th>Action Taken</th>
+					<th>Action Taken By</th>
+					<th>Preventive Action Plan</th>
+					<th>Action</th>
+					<th>Spares used</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="breakdownupdate in vm.breakdownupdates">
+					<td>{{$index+1}}</td>
+					<td>{{breakdownupdate.bd_slip}}</td>
+						<td>{{breakdownupdate.shift.shift_name}}</td>
+						
+							<td nowrap ng-if="breakdownupdate.machine.type==1">Machine</td>
+								<td nowrap ng-if="breakdownupdate.machine.type==2">Auxiliary</td>
+							<td>{{breakdownupdate.machine.machine_name}}</td>
+								<td>{{breakdownupdate.observation}}</td>
+									<td>{{breakdownupdate.root_cause}}</td>
+										<td>{{breakdownupdate.action_taken}}</td>
+											<td>{{breakdownupdate.action_by}}</td>
+											<td>{{breakdownupdate.prev_action_plan}}</td>
+											
+					<td class="text-nowrap">
+						<button type="button" class="btn btn-info"
+							ng-click="vm.add(breakdownupdate)">
+							<i class="fa fa-edit" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="btn btn-danger"
+							ng-click="vm.delet(breakdownupdate)">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div> -->
+<script type="text/javascript">
+
+    /* 
+    
+    $("#addButton").click(function () {
+	var newTextBoxDiv = $(document.createElement('tr'))
+	     .attr("id", 'TextBoxDiv' + counter);
+	newTextBoxDiv.after().html('<td><input type="text" name="namespa' + counter +'" id="namespa' + counter + '" value="" ></td><td><input type="text" name="qtyspa' + counter +'" id="qtyspa' + counter + '" value="" ></td>');        
+	newTextBoxDiv.appendTo("#spaceuse");		
+	counter++;
+     });
+
+     $("#removeButton").click(function () {
+	if(counter==1){
+          alert("No more textbox to remove");
+          return false;
+       }          
+	counter--;
+        $("#TextBoxDiv" + counter).remove();
+			
+     });  
+     
+     */
+		
+     
+ 
+
+</script>

@@ -1,0 +1,160 @@
+<style>
+.orange{ background-color: #e67817;}
+.orange th{color:#fff;}
+</style>
+<div class="row">
+
+</div>
+<div class="container-fluid" style="padding-top:50px;">
+	<div class="row page-title-div">
+		<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+			<h2 class="title">Target MASTER</h2>
+		</div>
+	</div>
+</div>
+<div class="container">
+			<div class="row top">
+				<div class="col-sm-12">
+				
+					<div class="row">
+						
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="exampleInputPassword13">Select
+							Category<span style="color:red;"> * </span></label> <select ng-model="target.category.cat_id"
+									
+									ng-options="cat.cat_id as cat.cat_name for cat in vm.categories"
+									class="form-control" required>
+									<option value="">Select Category</option>
+									
+								</select>
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="username13">Year<span style="color:red;"> * </span></label> 
+								
+								<select ng-model="target.year"
+									class="form-control" required>
+									<option value="">Select Year</option>
+									<option value="{{yearArr[0]}}">{{yearArr[0]}}</option>
+									<option value="{{yearArr[1]}}">{{yearArr[1]}}</option>
+								</select>
+								
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="username13">Month<span style="color:red;"> * </span></label> 
+								
+								<select ng-model="target.month"
+									class="form-control" required>
+									<option value="">Select Month</option>
+									<option value="Jan">January</option>
+									<option value="Feb">February</option>
+									<option value="Mar">March</option>
+									<option value="Apr">April</option>
+									<option value="May">May</option>
+									<option value="Jun">June</option>
+									<option value="Jul">July</option>
+									<option value="Aug">August</option>
+									<option value="Sep">September</option>
+									<option value="Oct">October</option>
+									<option value="Nov">November</option>
+									<option value="Dec">December</option>
+								</select>
+								
+							</div>
+						</div>
+						
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="username13">Type <span style="color:red;"> * </span></label> 
+								
+								<select ng-model="target.type"
+									class="form-control" required>
+									<option value="">Select Type</option>
+									<option value="MTTR">MTTR</option>
+									<option value="MTBF">MTBF</option>
+									
+								</select>
+								
+							</div>
+						</div>
+						
+						
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="name13">Hours<span style="color:red;"> * </span></label> <input type="text"
+									class="form-control" ng-model="target.hour" placeholder="Enter Target Hours"
+									ng-required="true">
+							</div>
+						</div>
+						
+						<div class="col-md-6">
+							<div align="right" style="margin-top:5%;">
+								<button type="submit" class="btn btn-primary" id="success"
+									ng-click="vm.ok(target)">Submit</button>
+									<button type="submit" class="btn btn-danger" id="cancel">Cancel</button>
+							
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+				</div>
+</div>
+						
+
+		<div class="container">				
+						<div class="panel-body table-responsive">
+					<table datatable="ng" id="example" class="table display">
+						<thead style="" class="orange">
+							<tr>
+								<th>ID</th>
+							
+								<th>Category</th>
+								<th>Year</th>
+								<th>Month</th>
+								<th>type</th>
+								<th>hour</th>
+							
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="target in vm.targets">
+								<td>{{$index+1}}</td>
+							
+								<td>{{target.category.cat_name}}</td>
+								<td>{{target.year}}</td>
+								<td>{{target.month}}</td>
+								<td>{{target.type}}</td>
+								<td>{{target.hour}}</td>
+								
+							
+								
+								<td class="text-nowrap">
+									<button type="button" class="btn btn-info"	ng-click="vm.add(target)">
+										<i class="fa fa-edit" aria-hidden="true"></i>
+									</button>
+									<button type="button" class="btn btn-danger" ng-click="vm.delet(target)">
+										<i class="fa fa-trash" aria-hidden="true"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+					
+	</div>				
+					
+						
+		
+
+		
+		
